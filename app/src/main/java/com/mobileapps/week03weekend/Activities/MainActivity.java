@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity
 
     private void ShowFragment(int nav_id)
     {
+        Log.d("Heiner","Picking the nav");
         Fragment fragment = null;
 
         switch (nav_id) {
@@ -73,15 +74,18 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_filter:
                 fragment = new FilterFragment();
                 break;
+
+                default:
+                    fragment = new FilterFragment();
+
         }
 
-        if (fragment != null) {
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-           // fragmentTransaction.add(R.id.frame_layout,fragment);
-            fragmentTransaction.replace(R.id.frame_layout, fragment).addToBackStack(null);
-            fragmentTransaction.commit();
-        }
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        // fragmentTransaction.add(R.id.frame_layout,fragment);
 
+        Log.d("Heiner","The tag is "+fragment.getTag());
+        fragmentTransaction.replace(R.id.frame_layout, fragment).addToBackStack(null);
+        fragmentTransaction.commit();
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
     }

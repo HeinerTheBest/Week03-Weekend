@@ -28,6 +28,8 @@ import java.util.HashSet;
 public class FilterFragment extends Fragment implements getTheItemForTheFIlterThread.ThreadCallBack {
     ArrayList<Filter> filters = new Filter().getAllTheFilter();
     RecyclerView recyclerView;
+    Context context;
+    final static String TAG = "FilterFragment";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -35,21 +37,20 @@ public class FilterFragment extends Fragment implements getTheItemForTheFIlterTh
     {
         View v = inflater.inflate(R.layout.fragment_filter, container, false);
         ((MainActivity)getActivity()).setBack(false);
-        for (int i=0;i<=4;i++)
-        {
-            getTheItemForTheFIlterThread getTheItemForTheFIlterThread = new getTheItemForTheFIlterThread(i,v.getContext(),this);
-            Thread thread = new Thread(getTheItemForTheFIlterThread);
-            thread.start();
-            Log.d("Heiner","Finish for nro "+i);
-        }
 
+        getTheItemForTheFIlterThread getTheItemForTheFIlterThread = new getTheItemForTheFIlterThread(v.getContext(),this);
+        Thread thread = new Thread(getTheItemForTheFIlterThread);
+        thread.start();
+        Log.d("Heiner","Finish for nro ");
+        context = v.getContext();
         recyclerView = v.findViewById(R.id.rvFilter);
-        FilterAdapter filterAdapter = new FilterAdapter(filters,v.getContext());
-        recyclerView.setAdapter(filterAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(v.getContext()));
 
 
         return v;
+    }
+
+    public static String getTAG() {
+        return TAG;
     }
 
     @Override
@@ -59,10 +60,13 @@ public class FilterFragment extends Fragment implements getTheItemForTheFIlterTh
     }
 
     @Override
-    public void returnOpc(HashSet<String> opc) {
-        for (int i=0;i<=4;i++)
-        {
-            filters.get(i).setOpc(opc);
+    public void returnOpc(ArrayList<Filter> returnFilters,Context thisContext)
+    {
+        if(recyclerView != null) {
+            FilterAdapter filterAdapter = new FilterAdapter(returnFilters, thisContext);
+            recyclerView.setAdapter(filterAdapter);
+
+            recyclerView.setLayoutManager(new LinearLayoutManager(thisContext));
         }
     }
 }

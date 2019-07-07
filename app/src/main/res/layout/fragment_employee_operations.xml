@@ -1,11 +1,234 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/tvFirstName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="@string/first_name"
+        android:layout_width="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/etFirstName"
+        app:layout_constraintEnd_toStartOf="@id/tvLasttName"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tvLasttName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="@string/last_name"
+        app:layout_constraintBottom_toTopOf="@id/etLasttName"
+        app:layout_constraintStart_toEndOf="@id/tvFirstName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/etFirstName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvFirstName"
+        android:hint="@string/enter_first_name"
+        app:layout_constraintHorizontal_weight="0.5"
+        android:layout_width="0dp"
+        android:layout_margin="8dp"
+        app:layout_constraintEnd_toStartOf="@id/etLasttName"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/etLasttName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvLasttName"
+        android:hint="@string/enter_last_name"
+        app:layout_constraintHorizontal_weight="0.5"
+        android:layout_margin="8dp"
+        app:layout_constraintStart_toEndOf="@id/etFirstName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tvAddress"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etFirstName"
+        android:text="Address"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="user" />
-</LinearLayout>
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/etAddress"
+        app:layout_constraintTop_toBottomOf="@id/tvAddress"
+        android:hint="Enter the address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tvCity"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etAddress"
+        android:text="City"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/etCity"
+        app:layout_constraintTop_toBottomOf="@id/tvCity"
+        android:layout_width="match_parent"
+        android:hint="@string/enter_the_city"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tvState"
+        android:text="State"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etCity"
+        app:layout_constraintEnd_toStartOf="@id/tvZipCode"
+        android:layout_width="0dp"
+        android:gravity="center_horizontal"
+        android:layout_margin="8dp"
+        app:layout_constraintHorizontal_weight="0.5"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tvZipCode"
+        android:text="Zip Code"
+        app:layout_constraintStart_toEndOf="@id/tvState"
+        app:layout_constraintTop_toBottomOf="@id/etCity"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="0dp"
+        android:layout_margin="8dp"
+        android:gravity="center_horizontal"
+        app:layout_constraintHorizontal_weight="0.5"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/etState"
+        android:layout_width="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvState"
+        app:layout_constraintEnd_toStartOf="@id/etZipCode"
+        android:layout_margin="8dp"
+        android:hint="Enter the State"
+        app:layout_constraintHorizontal_weight="0.5"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/etZipCode"
+        android:layout_width="0dp"
+        app:layout_constraintStart_toEndOf="@+id/etState"
+        app:layout_constraintTop_toBottomOf="@id/tvZipCode"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="8dp"
+        android:hint="Enter the Zip Code"
+        app:layout_constraintHorizontal_weight="0.5"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tvTaxId"
+        android:text="Tax Id"
+        app:layout_constraintTop_toBottomOf="@id/etState"
+        android:gravity="center_horizontal"
+        android:layout_margin="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/etTaxId"
+        android:hint="Enter the Tax Id"
+        app:layout_constraintTop_toBottomOf="@id/tvTaxId"
+        android:gravity="center_horizontal"
+        android:layout_margin="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tvPosition"
+        app:layout_constraintTop_toBottomOf="@id/etTaxId"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tvDepartment"
+        android:gravity="center_horizontal"
+        app:layout_constraintHorizontal_weight="0.5"
+        android:text="@string/position"
+        android:layout_width="0dp"
+        android:layout_margin="8dp"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tvDepartment"
+        app:layout_constraintTop_toBottomOf="@id/etTaxId"
+        app:layout_constraintStart_toEndOf="@id/tvPosition"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center_horizontal"
+        android:layout_margin="8dp"
+        app:layout_constraintHorizontal_weight="0.5"
+        android:text="Department"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/etPosition"
+        app:layout_constraintTop_toBottomOf="@id/tvPosition"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/etDepartment"
+        android:gravity="center_horizontal"
+        app:layout_constraintHorizontal_weight="0.5"
+        android:hint="Enter Position"
+        android:layout_width="0dp"
+        android:layout_margin="8dp"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/etDepartment"
+        app:layout_constraintTop_toBottomOf="@id/tvDepartment"
+        app:layout_constraintStart_toEndOf="@id/etPosition"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center_horizontal"
+        android:layout_margin="8dp"
+        app:layout_constraintHorizontal_weight="0.5"
+        android:hint="Enter Department"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/btnCreate"
+        app:layout_constraintTop_toBottomOf="@id/etPosition"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="8dp"
+        android:text="Create"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/btnCancel"
+        app:layout_constraintTop_toBottomOf="@id/btnCreate"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btnSave"
+        android:text="Cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/btnSave"
+        android:text="Save"
+        app:layout_constraintTop_toBottomOf="@id/btnCreate"
+        app:layout_constraintStart_toEndOf="@id/btnCancel"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/btnDelete"
+        android:text="Delete"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnCancel"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
