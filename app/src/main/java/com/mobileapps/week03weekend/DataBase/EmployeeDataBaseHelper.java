@@ -154,6 +154,64 @@ public class EmployeeDataBaseHelper  extends SQLiteOpenHelper
         return returnList;
     }
 
+
+    public HashSet<String> getAllCity() {
+        SQLiteDatabase database = this.getReadableDatabase();
+        HashSet<String> returnList = new HashSet<>();
+        Cursor cursor = database.rawQuery(EmployeeDataBaseContract.getAllCategory(),null);
+        if (cursor.moveToFirst()) {
+            do {
+                returnList.add(cursor.getString(cursor.getColumnIndex(KEY_CITY)));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        database.close();
+        return returnList;
+    }
+
+    public HashSet<String> getAllState() {
+        SQLiteDatabase database = this.getReadableDatabase();
+        HashSet<String> returnList = new HashSet<>();
+        Cursor cursor = database.rawQuery(EmployeeDataBaseContract.getAllCategory(),null);
+        if (cursor.moveToFirst()) {
+            do {
+                returnList.add(cursor.getString(cursor.getColumnIndex(KEY_STATE)));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        database.close();
+        return returnList;
+    }
+
+    public HashSet<String> getAllZipCode() {
+        SQLiteDatabase database = this.getReadableDatabase();
+        HashSet<String> returnList = new HashSet<>();
+        Cursor cursor = database.rawQuery(EmployeeDataBaseContract.getAllCategory(),null);
+        if (cursor.moveToFirst()) {
+            do {
+                returnList.add(cursor.getString(cursor.getColumnIndex(KEY_ZIP_CODE)));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        database.close();
+        return returnList;
+    }
+
+    public HashSet<String> getAllPosition() {
+        SQLiteDatabase database = this.getReadableDatabase();
+        HashSet<String> returnList = new HashSet<>();
+        Cursor cursor = database.rawQuery(EmployeeDataBaseContract.getAllCategory(),null);
+        if (cursor.moveToFirst()) {
+            do {
+                returnList.add(cursor.getString(cursor.getColumnIndex(KEY_POSITION)));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        database.close();
+        return returnList;
+    }
+
+
      public HashSet<String> getAllDepartment() {
         SQLiteDatabase database = this.getReadableDatabase();
         HashSet<String> returnList = new HashSet<>();
