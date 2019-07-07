@@ -17,9 +17,12 @@ public class EmployeeOperationFragment extends Fragment
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
+        View v = inflater.inflate(R.layout.fragment_employee_operations, container, false);
         ((MainActivity)getActivity()).setBack(true);
-        return inflater.inflate(R.layout.fragment_employee_operations, container, false);
+
+
+
+        return v;
     }
 
 
