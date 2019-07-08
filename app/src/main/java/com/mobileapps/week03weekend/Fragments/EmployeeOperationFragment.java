@@ -23,11 +23,11 @@ import com.mobileapps.week03weekend.R;
 public class EmployeeOperationFragment extends Fragment implements View.OnClickListener
 {
 
-    EditText etFirstName, etLastName, etAddress, etCity, etState, etZipCode, etTaxtId, etPosition, etDepartment;
-    Button   btnCreate, btnCancel, btnSave, btnDelete;
-    Context context;
-    Employee employee;
-    MainActivity mainActivity;
+    private EditText etFirstName, etLastName, etAddress, etCity, etState, etZipCode, etTaxtId, etPosition, etDepartment;
+    private Button   btnCreate, btnCancel, btnSave, btnDelete;
+    private Context context;
+    private Employee employee;
+    private MainActivity mainActivity;
 
     @Nullable
     @Override
@@ -47,11 +47,13 @@ public class EmployeeOperationFragment extends Fragment implements View.OnClickL
         switch (mainActivity.getEmployeeConfigurationOption())
         {
             case MainActivity.KEY_OPERATION_CREATE:
+                mainActivity.setSubMenu(false);
                 btnCancel.setVisibility(View.GONE);
                 btnSave.setVisibility(View.GONE);
                 btnDelete.setVisibility(View.GONE);
                 break;
             case MainActivity.KEY_OPERATION_CHECK:
+                mainActivity.setSubMenu(true);
                 desaibledAllEditText();
                 btnCancel.setVisibility(View.GONE);
                 btnSave.setVisibility(View.GONE);
@@ -59,10 +61,12 @@ public class EmployeeOperationFragment extends Fragment implements View.OnClickL
                 btnCreate.setVisibility(View.GONE);
                 break;
             case MainActivity.KEY_OPERATION_UPDATE:
-                 btnCreate.setVisibility(View.GONE);
+                mainActivity.setSubMenu(true);
+                btnCreate.setVisibility(View.GONE);
                  btnDelete.setVisibility(View.GONE);
                  break;
             case MainActivity.KEY_OPERATION_DELETE:
+                mainActivity.setSubMenu(true);
                 desaibledAllEditText();
                 btnCreate.setVisibility(View.GONE);
                 btnCancel.setVisibility(View.GONE);
@@ -107,9 +111,57 @@ public class EmployeeOperationFragment extends Fragment implements View.OnClickL
         btnDelete.setOnClickListener(this);
     }
 
+    private void saveEmployee()
+    {
+        class SaveEmployeeTask extends AsyncTask<String,String,String>
+        {
+            @Override
+            protected String doInBackground(String... strings) {
+                EmployeeDataBaseHelper employeeDataBaseHelper = new EmployeeDataBaseHelper(context);
+                employeeDataBaseHelper.updateEmployeeByID(employee);
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                Toast.makeText(context, "The employee was updated", Toast.LENGTH_SHORT).show();
+                getFragmentManager().popBackStack();
+            }
+        }
+
+        if(areAllTheFieldAreCompleted())
+        {
+            SaveEmployeeTask saveEmployeeTask = new SaveEmployeeTask();
+            saveEmployeeTask.execute();
+        }
+
+    }
+
+    private void deleteEmployee()
+    {
+        class DeleteEmployeTask extends AsyncTask<String,String,String>
+        {
+            @Override
+            protected String doInBackground(String... strings) {
+                EmployeeDataBaseHelper employeeDataBaseHelper = new EmployeeDataBaseHelper(context);
+                employeeDataBaseHelper.deleteByID(String.valueOf(employee.getId()));
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                Toast.makeText(context, "The employee was deleted", Toast.LENGTH_SHORT).show();
+                getFragmentManager().popBackStack();
+            }
+        }
+        DeleteEmployeTask deleteEmployeTask = new DeleteEmployeTask();
+        deleteEmployeTask.execute();
+    }
+
     public void createEmployee()
     {
-
         class CreateEmployeeTask extends AsyncTask<String,String,String>
         {
 
@@ -128,21 +180,14 @@ public class EmployeeOperationFragment extends Fragment implements View.OnClickL
             }
         }
 
-        if(canICreateAnewEmployee())
+        if(areAllTheFieldAreCompleted())
         {
             CreateEmployeeTask createEmployeeTask = new CreateEmployeeTask();
             createEmployeeTask.execute();
         }
-
-        /*if(canICreateAnewEmployee())
-        {
-            SaveTheEmployeeThread saveTheEmployeeThread = new SaveTheEmployeeThread(context,employee,this);
-            Thread thread = new Thread(saveTheEmployeeThread);
-            thread.start();
-        }*/
     }
 
-    private boolean canICreateAnewEmployee()
+    private boolean areAllTheFieldAreCompleted()
     {
 
         if(etFirstName.getText().toString().isEmpty())
@@ -223,20 +268,24 @@ public class EmployeeOperationFragment extends Fragment implements View.OnClickL
         switch (view.getId())
         {
             case R.id.btnCreate:
-            createEmployee();
-            break;
+                createEmployee();
+                break;
 
             case R.id.btnCancel:
                 cancel();
                 break;
+
+            case R.id.btnSave:
+                saveEmployee();
+                break;
+
+            case R.id.btnDelete:
+                deleteEmployee();
+                break;
+
         }
 
     }
 
-   /* @Override
-    public void returnDone()
-    {
-        Toast.makeText(context, "The employee was added", Toast.LENGTH_SHORT).show();
-        getFragmentManager().popBackStack();
-    }*/
+
 }

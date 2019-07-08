@@ -39,6 +39,7 @@ public class EmployeesListFragment extends Fragment
 
         mainActivity = ((MainActivity)getActivity());
         mainActivity.setBack(true);
+        mainActivity.setSubMenu(false);
 
         Log.d("Heiner",mainActivity.getDataFilter());
         Log.d("Heiner",""+mainActivity.getOpcFilter());

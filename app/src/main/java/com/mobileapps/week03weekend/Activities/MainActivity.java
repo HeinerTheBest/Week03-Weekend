@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.core.view.GravityCompat;
 
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -34,6 +35,8 @@ public class MainActivity extends AppCompatActivity
     public final static int KEY_OPERATION_CHECK  = 1;
     public final static int KEY_OPERATION_UPDATE = 2;
     public final static int KEY_OPERATION_DELETE = 3;
+    DrawerLayout drawer;
+    NavigationView navigationView;
 
     public int getEmployeeConfigurationOption() {
         return employeeConfigurationOption;
@@ -73,10 +76,11 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        drawer = findViewById(R.id.drawer_layout);
 
 
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
 
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -97,48 +101,52 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    public void setSubMenu(Boolean flag)
+    {
+        Menu nav_Menu = navigationView.getMenu();
+        nav_Menu.setGroupEnabled(R.id.subOptions,flag);
+
+    }
+
     private void ShowFragment(int nav_id)
     {
-        Log.d("Heiner","Picking the nav");
         Fragment fragment = null;
 
         switch (nav_id) {
             case R.id.nav_new_user:
+                setSubMenu(false);
                 setEmployeeConfigurationOption(KEY_OPERATION_CREATE);
                 fragment = new EmployeeOperationFragment();
                 break;
             case R.id.nav_update:
+                setSubMenu(true);
                 setEmployeeConfigurationOption(KEY_OPERATION_UPDATE);
                 fragment = new EmployeeOperationFragment();
                 break;
             case R.id.nav_delete:
+                setSubMenu(true);
                 setEmployeeConfigurationOption(KEY_OPERATION_DELETE);
                 fragment = new EmployeeOperationFragment();
                 break;
             case R.id.nav_filter:
+                setSubMenu(false);
                 fragment = new FilterFragment();
                 break;
 
                 default:
                     fragment = new FilterFragment();
-
         }
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        // fragmentTransaction.add(R.id.frame_layout,fragment);
 
-        Log.d("Heiner","The tag is "+fragment.getTag());
         fragmentTransaction.replace(R.id.frame_layout, fragment).addToBackStack(null);
         fragmentTransaction.commit();
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
     }
 
     public void startFragment(Fragment fragment)
     {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        // fragmentTransaction.add(R.id.frame_layout,fragment);
-
         fragmentTransaction.replace(R.id.frame_layout, fragment).addToBackStack(null);
         fragmentTransaction.commit();
     }

@@ -42,12 +42,8 @@ public class FilterFragment extends Fragment  {
         v = inflater.inflate(R.layout.fragment_filter, container, false);
         mainActivity = ((MainActivity)getActivity());
         mainActivity.setBack(false);
-
-        //getTheItemForTheFIlterThread getTheItemForTheFIlterThread = new getTheItemForTheFIlterThread(v.getContext(),this,mainActivity,v);
-       // Thread thread = new Thread(getTheItemForTheFIlterThread);
-        //thread.start();
-
         context = v.getContext();
+        mainActivity.setSubMenu(false);
 
         getItemForFilter();
 
