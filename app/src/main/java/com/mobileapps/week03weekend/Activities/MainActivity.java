@@ -27,6 +27,29 @@ public class MainActivity extends AppCompatActivity
     private Toolbar toolbar;
     private String dataFilter = "";
     private int    opcFilter  = 0 ;
+    private int  employeeConfigurationOption = KEY_OPERATION_CHECK;
+    private long employeeId = 0;
+
+    public final static int KEY_OPERATION_CREATE = 0;
+    public final static int KEY_OPERATION_CHECK  = 2;
+    public final static int KEY_OPERATION_UPDATE = 3;
+    public final static int KEY_OPERATION_DELETE = 4;
+
+    public int getEmployeeConfigurationOption() {
+        return employeeConfigurationOption;
+    }
+
+    public void setEmployeeConfigurationOption(int employeeConfigurationOption) {
+        this.employeeConfigurationOption = employeeConfigurationOption;
+    }
+
+    public long getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(long employeeId) {
+        this.employeeId = employeeId;
+    }
 
     public String getDataFilter() {
         return dataFilter;

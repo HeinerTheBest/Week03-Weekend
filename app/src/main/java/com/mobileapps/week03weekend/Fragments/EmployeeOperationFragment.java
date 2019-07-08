@@ -1,6 +1,7 @@
 package com.mobileapps.week03weekend.Fragments;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,11 +16,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.mobileapps.week03weekend.Activities.MainActivity;
+import com.mobileapps.week03weekend.DataBase.EmployeeDataBaseHelper;
 import com.mobileapps.week03weekend.Models.Employee;
 import com.mobileapps.week03weekend.R;
 import com.mobileapps.week03weekend.Threadings.SaveTheEmployeeThread;
 
-public class EmployeeOperationFragment extends Fragment implements View.OnClickListener, SaveTheEmployeeThread.SaveTheEmployeeCallBack
+public class EmployeeOperationFragment extends Fragment implements View.OnClickListener
 {
 
     EditText etFirstName, etLastName, etAddress, etCity, etState, etZipCode, etTaxtId, etPosition, etDepartment;
@@ -59,12 +61,37 @@ public class EmployeeOperationFragment extends Fragment implements View.OnClickL
 
     public void createEmployee()
     {
+
+        class CreateEmployeeTask extends AsyncTask<String,String,String>
+        {
+
+            @Override
+            protected String doInBackground(String... strings) {
+                EmployeeDataBaseHelper employeeDataBaseHelper = new EmployeeDataBaseHelper(context);
+                employeeDataBaseHelper.insertEmployee(employee);
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                Toast.makeText(context, "The employee was added", Toast.LENGTH_SHORT).show();
+                getFragmentManager().popBackStack();
+            }
+        }
+
         if(createNewEmployee())
+        {
+            CreateEmployeeTask createEmployeeTask = new CreateEmployeeTask();
+            createEmployeeTask.execute();
+        }
+
+        /*if(createNewEmployee())
         {
             SaveTheEmployeeThread saveTheEmployeeThread = new SaveTheEmployeeThread(context,employee,this);
             Thread thread = new Thread(saveTheEmployeeThread);
             thread.start();
-        }
+        }*/
     }
 
     private boolean createNewEmployee()
@@ -158,10 +185,10 @@ public class EmployeeOperationFragment extends Fragment implements View.OnClickL
 
     }
 
-    @Override
+   /* @Override
     public void returnDone()
     {
         Toast.makeText(context, "The employee was added", Toast.LENGTH_SHORT).show();
         getFragmentManager().popBackStack();
-    }
+    }*/
 }
