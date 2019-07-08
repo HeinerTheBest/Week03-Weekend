@@ -30,24 +30,27 @@ public class FilterFragment extends Fragment implements getTheItemForTheFIlterTh
     RecyclerView recyclerView;
     Context context;
     final static String TAG = "FilterFragment";
+    MainActivity mainActivity;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
         View v = inflater.inflate(R.layout.fragment_filter, container, false);
-        ((MainActivity)getActivity()).setBack(false);
+        mainActivity = ((MainActivity)getActivity());
+        mainActivity.setBack(false);
 
-        getTheItemForTheFIlterThread getTheItemForTheFIlterThread = new getTheItemForTheFIlterThread(v.getContext(),this);
+        getTheItemForTheFIlterThread getTheItemForTheFIlterThread = new getTheItemForTheFIlterThread(v.getContext(),this,mainActivity,v);
         Thread thread = new Thread(getTheItemForTheFIlterThread);
         thread.start();
         Log.d("Heiner","Finish for nro ");
         context = v.getContext();
-        recyclerView = v.findViewById(R.id.rvFilter);
 
 
         return v;
     }
+
+
 
     public static String getTAG() {
         return TAG;
@@ -60,12 +63,12 @@ public class FilterFragment extends Fragment implements getTheItemForTheFIlterTh
     }
 
     @Override
-    public void returnOpc(ArrayList<Filter> returnFilters,Context thisContext)
+    public void returnOpc(FilterAdapter filterAdapter,Context thisContext,View view)
     {
-        if(recyclerView != null) {
-            FilterAdapter filterAdapter = new FilterAdapter(returnFilters, thisContext);
-            recyclerView.setAdapter(filterAdapter);
+        recyclerView = view.findViewById(R.id.rvFilter);
 
+        if(recyclerView != null) {
+            recyclerView.setAdapter(filterAdapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(thisContext));
         }
     }

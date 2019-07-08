@@ -254,7 +254,140 @@ public class EmployeeDataBaseHelper  extends SQLiteOpenHelper
     }
 
 
+    public ArrayList<Employee> getEmployeeByCity(String requestCity) {
+        SQLiteDatabase database = this.getReadableDatabase();
+        ArrayList<Employee> returnList = new ArrayList<>();
 
+        Cursor cursor = database.rawQuery(EmployeeDataBaseContract.getByCity(requestCity), null);
+        if (cursor.moveToFirst()) {
+            do {
+                String  id                =                      cursor.getString(cursor.getColumnIndex(KEY_ID))                ;
+                String  firstName         =                      cursor.getString(cursor.getColumnIndex(KEY_FIRST_NAME))        ;
+                String  lastName          =                      cursor.getString(cursor.getColumnIndex(KEY_LAST_NAME))         ;
+                String  street            =                      cursor.getString(cursor.getColumnIndex(KEY_STREET_ADDRESS))    ;
+                String  city              =                      cursor.getString(cursor.getColumnIndex(KEY_CITY))              ;
+                String  state             =                      cursor.getString(cursor.getColumnIndex(KEY_STATE))             ;
+                String  zipCode           =                      cursor.getString(cursor.getColumnIndex(KEY_ZIP_CODE))          ;
+                String  taxID             =                      cursor.getString(cursor.getColumnIndex(KEY_TAX_ID))            ;
+                String  position          =                      cursor.getString(cursor.getColumnIndex(KEY_POSITION))          ;
+                String  department        =                      cursor.getString(cursor.getColumnIndex(KEY_DEPARTMENT))        ;
+
+                returnList.add(new Employee(Long.parseLong(id), firstName,lastName,street,city,state,zipCode,taxID,position,department));
+            }
+            while (cursor.moveToNext());
+        }
+        cursor.close();
+        database.close();
+        return returnList;
+    }
+
+    public ArrayList<Employee> getEmployeeByState(String requestState) {
+        SQLiteDatabase database = this.getReadableDatabase();
+        ArrayList<Employee> returnList = new ArrayList<>();
+
+        Cursor cursor = database.rawQuery(EmployeeDataBaseContract.getByState(requestState), null);
+        if (cursor.moveToFirst()) {
+            do {
+                String  id                =                      cursor.getString(cursor.getColumnIndex(KEY_ID))                ;
+                String  firstName         =                      cursor.getString(cursor.getColumnIndex(KEY_FIRST_NAME))        ;
+                String  lastName          =                      cursor.getString(cursor.getColumnIndex(KEY_LAST_NAME))         ;
+                String  street            =                      cursor.getString(cursor.getColumnIndex(KEY_STREET_ADDRESS))    ;
+                String  city              =                      cursor.getString(cursor.getColumnIndex(KEY_CITY))              ;
+                String  state             =                      cursor.getString(cursor.getColumnIndex(KEY_STATE))             ;
+                String  zipCode           =                      cursor.getString(cursor.getColumnIndex(KEY_ZIP_CODE))          ;
+                String  taxID             =                      cursor.getString(cursor.getColumnIndex(KEY_TAX_ID))            ;
+                String  position          =                      cursor.getString(cursor.getColumnIndex(KEY_POSITION))          ;
+                String  department        =                      cursor.getString(cursor.getColumnIndex(KEY_DEPARTMENT))        ;
+
+                returnList.add(new Employee(Long.parseLong(id), firstName,lastName,street,city,state,zipCode,taxID,position,department));
+            }
+            while (cursor.moveToNext());
+        }
+        cursor.close();
+        database.close();
+        return returnList;
+    }
+
+    public ArrayList<Employee> getEmployeeByZipCode(String requestZipCode) {
+        SQLiteDatabase database = this.getReadableDatabase();
+        ArrayList<Employee> returnList = new ArrayList<>();
+
+        Cursor cursor = database.rawQuery(EmployeeDataBaseContract.getByZipCOde(requestZipCode), null);
+        if (cursor.moveToFirst()) {
+            do {
+                String  id                =                      cursor.getString(cursor.getColumnIndex(KEY_ID))                ;
+                String  firstName         =                      cursor.getString(cursor.getColumnIndex(KEY_FIRST_NAME))        ;
+                String  lastName          =                      cursor.getString(cursor.getColumnIndex(KEY_LAST_NAME))         ;
+                String  street            =                      cursor.getString(cursor.getColumnIndex(KEY_STREET_ADDRESS))    ;
+                String  city              =                      cursor.getString(cursor.getColumnIndex(KEY_CITY))              ;
+                String  state             =                      cursor.getString(cursor.getColumnIndex(KEY_STATE))             ;
+                String  zipCode           =                      cursor.getString(cursor.getColumnIndex(KEY_ZIP_CODE))          ;
+                String  taxID             =                      cursor.getString(cursor.getColumnIndex(KEY_TAX_ID))            ;
+                String  position          =                      cursor.getString(cursor.getColumnIndex(KEY_POSITION))          ;
+                String  department        =                      cursor.getString(cursor.getColumnIndex(KEY_DEPARTMENT))        ;
+
+                returnList.add(new Employee(Long.parseLong(id), firstName,lastName,street,city,state,zipCode,taxID,position,department));
+            }
+            while (cursor.moveToNext());
+        }
+        cursor.close();
+        database.close();
+        return returnList;
+    }
+
+    public ArrayList<Employee> getEmployeeByPosition(String reuestPosition) {
+        SQLiteDatabase database = this.getReadableDatabase();
+        ArrayList<Employee> returnList = new ArrayList<>();
+
+        Cursor cursor = database.rawQuery(EmployeeDataBaseContract.getByPosition(reuestPosition), null);
+        if (cursor.moveToFirst()) {
+            do {
+                String  id                =                      cursor.getString(cursor.getColumnIndex(KEY_ID))                ;
+                String  firstName         =                      cursor.getString(cursor.getColumnIndex(KEY_FIRST_NAME))        ;
+                String  lastName          =                      cursor.getString(cursor.getColumnIndex(KEY_LAST_NAME))         ;
+                String  street            =                      cursor.getString(cursor.getColumnIndex(KEY_STREET_ADDRESS))    ;
+                String  city              =                      cursor.getString(cursor.getColumnIndex(KEY_CITY))              ;
+                String  state             =                      cursor.getString(cursor.getColumnIndex(KEY_STATE))             ;
+                String  zipCode           =                      cursor.getString(cursor.getColumnIndex(KEY_ZIP_CODE))          ;
+                String  taxID             =                      cursor.getString(cursor.getColumnIndex(KEY_TAX_ID))            ;
+                String  position          =                      cursor.getString(cursor.getColumnIndex(KEY_POSITION))          ;
+                String  department        =                      cursor.getString(cursor.getColumnIndex(KEY_DEPARTMENT))        ;
+
+                returnList.add(new Employee(Long.parseLong(id), firstName,lastName,street,city,state,zipCode,taxID,position,department));
+            }
+            while (cursor.moveToNext());
+        }
+        cursor.close();
+        database.close();
+        return returnList;
+    }
+
+    public ArrayList<Employee> getEmployeeByDepartment(String requestDepartment) {
+        SQLiteDatabase database = this.getReadableDatabase();
+        ArrayList<Employee> returnList = new ArrayList<>();
+
+        Cursor cursor = database.rawQuery(EmployeeDataBaseContract.getByDepartment(requestDepartment), null);
+        if (cursor.moveToFirst()) {
+            do {
+                String  id                =                      cursor.getString(cursor.getColumnIndex(KEY_ID))                ;
+                String  firstName         =                      cursor.getString(cursor.getColumnIndex(KEY_FIRST_NAME))        ;
+                String  lastName          =                      cursor.getString(cursor.getColumnIndex(KEY_LAST_NAME))         ;
+                String  street            =                      cursor.getString(cursor.getColumnIndex(KEY_STREET_ADDRESS))    ;
+                String  city              =                      cursor.getString(cursor.getColumnIndex(KEY_CITY))              ;
+                String  state             =                      cursor.getString(cursor.getColumnIndex(KEY_STATE))             ;
+                String  zipCode           =                      cursor.getString(cursor.getColumnIndex(KEY_ZIP_CODE))          ;
+                String  taxID             =                      cursor.getString(cursor.getColumnIndex(KEY_TAX_ID))            ;
+                String  position          =                      cursor.getString(cursor.getColumnIndex(KEY_POSITION))          ;
+                String  department        =                      cursor.getString(cursor.getColumnIndex(KEY_DEPARTMENT))        ;
+
+                returnList.add(new Employee(Long.parseLong(id), firstName,lastName,street,city,state,zipCode,taxID,position,department));
+            }
+            while (cursor.moveToNext());
+        }
+        cursor.close();
+        database.close();
+        return returnList;
+    }
 
 
 

@@ -50,4 +50,34 @@ public class EmployeeDataBaseContract
         return SELECT_ALL_QUERY;
     }
 
+    public static  String getByCity(String city)
+    {
+        return String.format("%s WHERE %S = \"%s\"",
+                SELECT_ALL_QUERY,KEY_CITY,city);
+    }
+
+    public static  String getByState(String state)
+    {
+        return String.format("%s WHERE %S = \"%s\"",
+                SELECT_ALL_QUERY,KEY_STATE,state);
+    }
+
+    public static  String getByZipCOde(String zipCOde)
+    {
+        return String.format("%s WHERE %S = \"%s\"",
+                SELECT_ALL_QUERY,KEY_ZIP_CODE,zipCOde);
+    }
+
+    public static  String getByPosition(String position)
+    {
+        return String.format("%s WHERE %S = \"%s\"",
+                SELECT_ALL_QUERY,KEY_POSITION,position);
+    }
+
+    public static  String getByDepartment(String department)
+    {
+        return String.format("%s WHERE %S = \"%s\"",
+                SELECT_ALL_QUERY,KEY_DEPARTMENT,department);
+    }
+
 }

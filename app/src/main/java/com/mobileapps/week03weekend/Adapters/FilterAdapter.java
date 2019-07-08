@@ -11,8 +11,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.mobileapps.week03weekend.Activities.MainActivity;
+import com.mobileapps.week03weekend.Fragments.EmployeesListFragment;
+import com.mobileapps.week03weekend.Fragments.FilterFragment;
 import com.mobileapps.week03weekend.Models.Filter;
 import com.mobileapps.week03weekend.R;
 
@@ -23,10 +27,12 @@ public class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.ViewHolder
 {
     ArrayList<Filter> filters = new ArrayList<>();
     Context context;
+    MainActivity mainActivity;
 
-    public FilterAdapter(ArrayList<Filter> filters, Context context) {
+    public FilterAdapter(ArrayList<Filter> filters, Context context, MainActivity mainActivity) {
         this.filters = filters;
         this.context = context;
+        this.mainActivity = mainActivity;
     }
 
 
@@ -40,7 +46,7 @@ public class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position)
+    public void onBindViewHolder(@NonNull final ViewHolder holder, int position)
     {
         final Filter filter = filters.get(position);
 
@@ -52,6 +58,16 @@ public class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.ViewHolder
         ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, filter.getOpc());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         holder.spinner.setAdapter(adapter);
+
+        holder.btnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mainActivity.setDataFilter(String.valueOf(holder.spinner.getSelectedItem()));
+                mainActivity.setOpcFilter(filter.getId());
+                Fragment fragment = new EmployeesListFragment();
+                mainActivity.startFragment(fragment);
+            }
+        });
 
     }
 

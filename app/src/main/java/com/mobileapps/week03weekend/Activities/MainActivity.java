@@ -25,6 +25,24 @@ public class MainActivity extends AppCompatActivity
 
 
     private Toolbar toolbar;
+    private String dataFilter = "";
+    private int    opcFilter  = 0 ;
+
+    public String getDataFilter() {
+        return dataFilter;
+    }
+
+    public void setDataFilter(String data) {
+        this.dataFilter = data;
+    }
+
+    public int getOpcFilter() {
+        return opcFilter;
+    }
+
+    public void setOpcFilter(int opc) {
+        this.opcFilter = opc;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +106,15 @@ public class MainActivity extends AppCompatActivity
         fragmentTransaction.commit();
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+    }
+
+    public void startFragment(Fragment fragment)
+    {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        // fragmentTransaction.add(R.id.frame_layout,fragment);
+
+        fragmentTransaction.replace(R.id.frame_layout, fragment).addToBackStack(null);
+        fragmentTransaction.commit();
     }
 
     @Override
