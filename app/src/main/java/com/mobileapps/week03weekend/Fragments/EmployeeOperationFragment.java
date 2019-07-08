@@ -19,7 +19,6 @@ import com.mobileapps.week03weekend.Activities.MainActivity;
 import com.mobileapps.week03weekend.DataBase.EmployeeDataBaseHelper;
 import com.mobileapps.week03weekend.Models.Employee;
 import com.mobileapps.week03weekend.R;
-import com.mobileapps.week03weekend.Threadings.SaveTheEmployeeThread;
 
 public class EmployeeOperationFragment extends Fragment implements View.OnClickListener
 {
@@ -28,16 +27,61 @@ public class EmployeeOperationFragment extends Fragment implements View.OnClickL
     Button   btnCreate, btnCancel, btnSave, btnDelete;
     Context context;
     Employee employee;
+    MainActivity mainActivity;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_employee_operations, container, false);
-        ((MainActivity)getActivity()).setBack(true);
+        mainActivity = ((MainActivity)getActivity());
+        mainActivity.setBack(true);
         context = v.getContext();
         Log.d("Heiner","Starting employe fragment");
         bindViews(v);
+        setConfiguration();
         return v;
+    }
+
+    private void setConfiguration()
+    {
+        switch (mainActivity.getEmployeeConfigurationOption())
+        {
+            case MainActivity.KEY_OPERATION_CREATE:
+                btnCancel.setVisibility(View.GONE);
+                btnSave.setVisibility(View.GONE);
+                btnDelete.setVisibility(View.GONE);
+                break;
+            case MainActivity.KEY_OPERATION_CHECK:
+                desaibledAllEditText();
+                btnCancel.setVisibility(View.GONE);
+                btnSave.setVisibility(View.GONE);
+                btnDelete.setVisibility(View.GONE);
+                btnCreate.setVisibility(View.GONE);
+                break;
+            case MainActivity.KEY_OPERATION_UPDATE:
+                 btnCreate.setVisibility(View.GONE);
+                 btnDelete.setVisibility(View.GONE);
+                 break;
+            case MainActivity.KEY_OPERATION_DELETE:
+                desaibledAllEditText();
+                btnCreate.setVisibility(View.GONE);
+                btnCancel.setVisibility(View.GONE);
+                btnSave.setVisibility(View.GONE);
+                break;
+        }
+    }
+
+    private void desaibledAllEditText()
+    {
+        etFirstName.setEnabled(false);
+        etLastName.setEnabled(false);
+        etAddress.setEnabled(false);
+        etCity.setEnabled(false);
+        etState.setEnabled(false);
+        etZipCode.setEnabled(false);
+        etTaxtId.setEnabled(false);
+        etPosition.setEnabled(false);
+        etDepartment.setEnabled(false);
     }
 
     private void bindViews(View v)
@@ -53,10 +97,14 @@ public class EmployeeOperationFragment extends Fragment implements View.OnClickL
         etDepartment= v.findViewById(R.id.etDepartment);
 
         btnCreate   = v.findViewById(R.id.btnCreate);
-        btnCreate.setOnClickListener(this);
-
         btnCancel   = v.findViewById(R.id.btnCancel);
+        btnSave     = v.findViewById(R.id.btnSave);
+        btnDelete   = v.findViewById(R.id.btnDelete);
+
+        btnCreate.setOnClickListener(this);
         btnCancel.setOnClickListener(this);
+        btnSave.setOnClickListener(this);
+        btnDelete.setOnClickListener(this);
     }
 
     public void createEmployee()
@@ -80,13 +128,13 @@ public class EmployeeOperationFragment extends Fragment implements View.OnClickL
             }
         }
 
-        if(createNewEmployee())
+        if(canICreateAnewEmployee())
         {
             CreateEmployeeTask createEmployeeTask = new CreateEmployeeTask();
             createEmployeeTask.execute();
         }
 
-        /*if(createNewEmployee())
+        /*if(canICreateAnewEmployee())
         {
             SaveTheEmployeeThread saveTheEmployeeThread = new SaveTheEmployeeThread(context,employee,this);
             Thread thread = new Thread(saveTheEmployeeThread);
@@ -94,7 +142,7 @@ public class EmployeeOperationFragment extends Fragment implements View.OnClickL
         }*/
     }
 
-    private boolean createNewEmployee()
+    private boolean canICreateAnewEmployee()
     {
 
         if(etFirstName.getText().toString().isEmpty())

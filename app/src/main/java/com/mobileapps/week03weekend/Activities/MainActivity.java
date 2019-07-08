@@ -31,9 +31,9 @@ public class MainActivity extends AppCompatActivity
     private long employeeId = 0;
 
     public final static int KEY_OPERATION_CREATE = 0;
-    public final static int KEY_OPERATION_CHECK  = 2;
-    public final static int KEY_OPERATION_UPDATE = 3;
-    public final static int KEY_OPERATION_DELETE = 4;
+    public final static int KEY_OPERATION_CHECK  = 1;
+    public final static int KEY_OPERATION_UPDATE = 2;
+    public final static int KEY_OPERATION_DELETE = 3;
 
     public int getEmployeeConfigurationOption() {
         return employeeConfigurationOption;
@@ -104,12 +104,15 @@ public class MainActivity extends AppCompatActivity
 
         switch (nav_id) {
             case R.id.nav_new_user:
+                setEmployeeConfigurationOption(KEY_OPERATION_CREATE);
                 fragment = new EmployeeOperationFragment();
                 break;
             case R.id.nav_update:
+                setEmployeeConfigurationOption(KEY_OPERATION_UPDATE);
                 fragment = new EmployeeOperationFragment();
                 break;
             case R.id.nav_delete:
+                setEmployeeConfigurationOption(KEY_OPERATION_DELETE);
                 fragment = new EmployeeOperationFragment();
                 break;
             case R.id.nav_filter:
