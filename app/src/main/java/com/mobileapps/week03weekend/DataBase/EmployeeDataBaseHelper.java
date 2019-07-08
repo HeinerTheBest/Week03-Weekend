@@ -108,6 +108,8 @@ public class EmployeeDataBaseHelper  extends SQLiteOpenHelper
         contentValues.put(KEY_POSITION,       employee.getPosition());
         contentValues.put(KEY_DEPARTMENT,     employee.getDepartment());
 
+        Log.d("Heiner","My DB name = "+employee.getFirstName()+" id:"+employee.getId());
+
         final int numberOfRowsUpdated = database.update(EMPLOYEE_TABLE_NAME,
                 contentValues, // new values to insert
                 KEY_ID + " = ?",
@@ -273,6 +275,7 @@ public class EmployeeDataBaseHelper  extends SQLiteOpenHelper
                 String  department        =                      cursor.getString(cursor.getColumnIndex(KEY_DEPARTMENT))        ;
 
                 returnList.add(new Employee(Long.parseLong(id), firstName,lastName,street,city,state,zipCode,taxID,position,department));
+                Log.d("Heiner","Getting name "+firstName);
             }
             while (cursor.moveToNext());
         }

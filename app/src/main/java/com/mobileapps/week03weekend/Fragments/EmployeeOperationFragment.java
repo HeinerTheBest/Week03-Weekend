@@ -55,6 +55,7 @@ public class EmployeeOperationFragment extends Fragment implements View.OnClickL
             case MainActivity.KEY_OPERATION_CHECK:
                 mainActivity.setSubMenu(true);
                 desaibledAllEditText();
+                getEmployee();
                 btnCancel.setVisibility(View.GONE);
                 btnSave.setVisibility(View.GONE);
                 btnDelete.setVisibility(View.GONE);
@@ -62,12 +63,14 @@ public class EmployeeOperationFragment extends Fragment implements View.OnClickL
                 break;
             case MainActivity.KEY_OPERATION_UPDATE:
                 mainActivity.setSubMenu(true);
+                getEmployee();
                 btnCreate.setVisibility(View.GONE);
                  btnDelete.setVisibility(View.GONE);
                  break;
             case MainActivity.KEY_OPERATION_DELETE:
                 mainActivity.setSubMenu(true);
                 desaibledAllEditText();
+                getEmployee();
                 btnCreate.setVisibility(View.GONE);
                 btnCancel.setVisibility(View.GONE);
                 btnSave.setVisibility(View.GONE);
@@ -118,6 +121,7 @@ public class EmployeeOperationFragment extends Fragment implements View.OnClickL
             @Override
             protected String doInBackground(String... strings) {
                 EmployeeDataBaseHelper employeeDataBaseHelper = new EmployeeDataBaseHelper(context);
+                employee.setId(mainActivity.getEmployeeId());
                 employeeDataBaseHelper.updateEmployeeByID(employee);
                 return null;
             }
@@ -126,7 +130,7 @@ public class EmployeeOperationFragment extends Fragment implements View.OnClickL
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 Toast.makeText(context, "The employee was updated", Toast.LENGTH_SHORT).show();
-                getFragmentManager().popBackStack();
+                mainActivity.startFragment( new FilterFragment());
             }
         }
 
@@ -145,7 +149,7 @@ public class EmployeeOperationFragment extends Fragment implements View.OnClickL
             @Override
             protected String doInBackground(String... strings) {
                 EmployeeDataBaseHelper employeeDataBaseHelper = new EmployeeDataBaseHelper(context);
-                employeeDataBaseHelper.deleteByID(String.valueOf(employee.getId()));
+                employeeDataBaseHelper.deleteByID(String.valueOf(mainActivity.getEmployeeId()));
                 return null;
             }
 
@@ -153,11 +157,41 @@ public class EmployeeOperationFragment extends Fragment implements View.OnClickL
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 Toast.makeText(context, "The employee was deleted", Toast.LENGTH_SHORT).show();
-                getFragmentManager().popBackStack();
+                mainActivity.startFragment( new FilterFragment());
             }
         }
         DeleteEmployeTask deleteEmployeTask = new DeleteEmployeTask();
         deleteEmployeTask.execute();
+    }
+
+    public void getEmployee()
+    {
+        class GetEmployeeTask extends AsyncTask<String,String,String>
+        {
+            @Override
+            protected String doInBackground(String... strings) {
+                EmployeeDataBaseHelper employeeDataBaseHelper = new EmployeeDataBaseHelper(context);
+                employee = employeeDataBaseHelper.getEmployee(String.valueOf(mainActivity.getEmployeeId()));
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                etFirstName.setText(employee.getFirstName());
+                etLastName.setText(employee.getLastName());
+                etAddress.setText(employee.getAddress());
+                etCity.setText(employee.getCity());
+                etState.setText(employee.getState());
+                etZipCode.setText(employee.getZipCode());
+                etTaxtId.setText(employee.getTaxId());
+                etPosition.setText(employee.getPosition());
+                etDepartment.setText(employee.getDepartment());
+            }
+        }
+
+        GetEmployeeTask getEmployeeTask = new GetEmployeeTask();
+        getEmployeeTask.execute();
     }
 
     public void createEmployee()
@@ -176,7 +210,8 @@ public class EmployeeOperationFragment extends Fragment implements View.OnClickL
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 Toast.makeText(context, "The employee was added", Toast.LENGTH_SHORT).show();
-                getFragmentManager().popBackStack();
+                mainActivity.startFragment( new FilterFragment());
+
             }
         }
 
@@ -247,6 +282,8 @@ public class EmployeeOperationFragment extends Fragment implements View.OnClickL
                 etPosition.getText().toString(),
                 etDepartment.getText().toString()
                 );
+
+        Log.d("Heiner","name "+employee.getFirstName());
 
         return true;
     }

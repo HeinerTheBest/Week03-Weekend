@@ -60,6 +60,7 @@ public class EmployeesListFragment extends Fragment
             protected ArrayList<Employee> doInBackground(String... strings) {
                 ArrayList<Employee> employees = new ArrayList<>();
                 EmployeeDataBaseHelper employeeDataBaseHelper = new EmployeeDataBaseHelper(context);
+                Log.d("Heiner","using the opc filter "+mainActivity.getOpcFilter()+" in Employee list fragment");
                 switch (mainActivity.getOpcFilter()) {
                     case 0:
                         employees = employeeDataBaseHelper.getEmployeeByCity(mainActivity.getDataFilter());
